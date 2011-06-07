@@ -1,0 +1,4 @@
+{
+	"name": "sock",
+	"main": "./lib/json-socket"
+}
