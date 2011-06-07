@@ -1,4 +1,4 @@
 {
-    "name": "sock",
+    "name": "json-socket",
     "main": "./lib/json-socket"
 }
