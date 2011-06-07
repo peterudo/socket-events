@@ -1,6 +1,13 @@
-var sock = require('../lib/json-socket');
+var net = require('net'),
+    jsonsocket = require('../lib/json-socket');
 
-var client = sock.connect(8124, 'localhost');
+/**
+ * Create a standard net.Socket object
+ */
+var connection = net.createConnection(8124, 'localhost');
+
+
+var client = jsonsocket.listen(connection);
 
 client.on('connect', function () {
     console.log("I just connected to the server...");
@@ -11,7 +18,10 @@ client.on('event_on_client', function (data) {
     console.log(data);
 });
 
-client.trigger('event_on_server', {
-    data: 'sent to the server',
-    from: 'the client'
-});
+setInterval(function () {
+    console.log("\nSending data to server\n");
+    client.trigger('event_on_server', {
+        data: 'sent to the server',
+        from: 'the client'
+    });
+}, 3000);

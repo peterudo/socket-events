@@ -1,6 +1,19 @@
-var sock = require('../lib/json-socket');
+var net = require('net'),
+    jsonsocket = require('../lib/json-socket');
 
-var server = sock.create(function (client) {
+/**
+ * Use your existing net.Server object
+ */
+var server = net.createServer();
+server.listen(8124, 'localhost');
+
+
+/**
+ * Set json-socket to listen to your server, and you're able trigger events on the client
+ */
+var socket = jsonsocket.listen(server);
+
+socket.on('connection', function (client) {
     console.log('A new client connected...');
 
     client.on('event_on_server', function (data) {
@@ -8,10 +21,12 @@ var server = sock.create(function (client) {
         console.log(data);
     });
 
-    client.trigger('event_on_client', {
-        data: 'sent from server',
-        to: 'client'
-    });
+    setInterval(function () {
+        console.log("\nSending data to client\n");
+        client.trigger('event_on_client', {
+            data: 'sent from server',
+            to: 'client'
+        });
+    }, 2500);
 });
 
-server.listen(8124, 'localhost');
