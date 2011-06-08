@@ -18,6 +18,14 @@ socket.on('event_on_client', function (data) {
     console.log(data);
 });
 
+socket.on('end', function () {
+    socket.end();
+});
+
+socket.on('close', function (hadError) {
+    process.exit(0);
+});
+
 setInterval(function () {
     console.log("\nSending data to server\n");
     socket.trigger('event_on_server', {

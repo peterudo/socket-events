@@ -21,12 +21,20 @@ socketServer.on('connection', function (socket) {
         console.log(data);
     });
 
-    setInterval(function () {
+    var intervalId = setInterval(function () {
         console.log("\nSending data to client\n");
         socket.trigger('event_on_client', {
             data: 'sent from server',
             to: 'client'
         });
     }, 2500);
+
+    socket.on('end', function () {
+        socket.end();
+    });
+
+    socket.on('close', function (hadError) {
+        clearInterval(intervalId);
+    });
 });
 
