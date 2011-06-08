@@ -1,4 +1,6 @@
 {
-    "name": "json-socket",
-    "main": "./lib/json-socket"
+    "name": "socket-events",
+    "description": "A wrapper around node.js `net.Server` and `net.Socket` adding support for triggering custom events both ways, and optionally transmitting a JSON object",
+    "main": "./lib/socket-events",
+    "author": "Peter Rudolfsen <peter@silencethefoe.com>"
 }

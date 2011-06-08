@@ -1,5 +1,5 @@
 var net = require('net'),
-    jsonsocket = require('../lib/json-socket');
+    socketEvents = require('../lib/socket-events');
 
 /**
  * Create a standard net.Socket object
@@ -7,7 +7,7 @@ var net = require('net'),
 var connection = net.createConnection(8124, 'localhost');
 
 
-var client = jsonsocket.listen(connection);
+var client = socketEvents.listen(connection);
 
 client.on('connect', function () {
     console.log("I just connected to the server...");
