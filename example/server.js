@@ -16,25 +16,24 @@ var socketServer = socketEvents.listen(server);
 socketServer.on('connection', function (socket) {
     console.log('A new client connected...');
 
-    socket.on('event_on_server', function (data) {
+    /**
+     * Use any number of arguments with data supported by JSON.stringify/parse
+     */
+    socket.on('event_on_server', function (arg1, arg2, json) {
         console.log('received JSON from a client:');
-        console.log(data);
+        console.log(arg1, arg2);
+        console.log(json);
     });
 
-    var intervalId = setInterval(function () {
-        console.log("\nSending data to client\n");
-        socket.trigger('event_on_client', {
-            data: 'sent from server',
-            to: 'client'
-        });
-    }, 2500);
+    socket.on('heartbeat', function (time) {
+        console.log("Heartbeat from: " + this.fd, time);
+    });
 
     socket.on('end', function () {
         socket.end();
     });
-
-    socket.on('close', function (hadError) {
-        clearInterval(intervalId);
-    });
 });
 
+setInterval(function () {
+    socketServer.broadcast('Broadcast from server');
+}, 1000);

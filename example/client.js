@@ -13,8 +13,7 @@ socket.on('connect', function () {
     console.log("I just connected to the server...");
 });
 
-socket.on('event_on_client', function (data) {
-    console.log('received JSON from server:');
+socket.on('broadcast', function (data) {
     console.log(data);
 });
 
@@ -26,10 +25,8 @@ socket.on('close', function (hadError) {
     process.exit(0);
 });
 
+socket.trigger('event_on_server', 'Argument 1', 'Argument 2', { json: 'data' });
+
 setInterval(function () {
-    console.log("\nSending data to server\n");
-    socket.trigger('event_on_server', {
-        data: 'sent to the server',
-        from: 'the client'
-    });
-}, 3000);
+    socket.trigger('heartbeat', new Date().getTime());
+}, 2500);
