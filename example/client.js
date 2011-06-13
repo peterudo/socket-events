@@ -1,11 +1,6 @@
 var net = require('net'),
     socketEvents = require('../lib/socket-events');
 
-/**
- * It's also possible to reuse an existing connection by doing the following:
-var connection = net.createConnection(8124, 'localhost'),
-    socket = socketEvents.listen(connection);
- */
 
 var socket = socketEvents.createConnection(8124, 'localhost');
 

@@ -9,7 +9,7 @@ server.listen(8124, 'localhost');
 
 
 /**
- * Set json-socket to listen to your server, and you're able trigger events on the client
+ * Set it to listen to your server, and you're able trigger events on the client
  */
 var socketServer = socketEvents.listen(server);
 
@@ -26,11 +26,7 @@ socketServer.on('connection', function (socket) {
     });
 
     socket.on('heartbeat', function (time) {
-        console.log("Heartbeat from: " + this.fd, time);
-    });
-
-    socket.on('end', function () {
-        socket.end();
+        console.log("Heartbeat from: " + this.socket.fd, time);
     });
 });
 
